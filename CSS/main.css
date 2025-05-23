@@ -1,4 +1,4 @@
-root {
+.root {
     --primary-color: #000000;
     --secondary-color: #333333;
     --accent-color: #FF0000;
@@ -16,7 +16,7 @@ root {
     box-sizing: border-box;
 }
 
-body {
+.body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
