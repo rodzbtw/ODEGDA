@@ -16,7 +16,7 @@
     box-sizing: border-box;
 }
 
-.body {
+body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
