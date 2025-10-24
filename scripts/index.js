@@ -1,4 +1,3 @@
-// Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -14,7 +13,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Search functionality
 function toggleSearch() {
     document.getElementById('searchOverlay').classList.toggle('active');
     if (document.getElementById('searchOverlay').classList.contains('active')) {
@@ -30,7 +28,6 @@ function handleSearch(e) {
     toggleSearch();
 }
 
-// Cart functionality
 let cartItems = [];
 let cartTotal = 0;
 
@@ -69,7 +66,6 @@ function removeFromCart(itemId) {
     }
 }
 
-// Wishlist functionality
 let wishlistItems = new Set();
 
 document.querySelectorAll('.wishlist-btn').forEach(btn => {
@@ -90,7 +86,6 @@ document.querySelectorAll('.wishlist-btn').forEach(btn => {
     });
 });
 
-// Product actions
 document.querySelectorAll('.quick-view').forEach(btn => {
     btn.addEventListener('click', function() {
         const productCard = this.closest('.product-card');
@@ -120,7 +115,6 @@ document.querySelectorAll('.add-to-cart').forEach(btn => {
     });
 });
 
-// Newsletter subscription
 document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const email = this.querySelector('input[type="email"]').value;

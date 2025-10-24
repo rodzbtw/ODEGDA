@@ -1,4 +1,3 @@
-// Tab switching functionality
 function switchTab(tab) {
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
@@ -12,7 +11,6 @@ function switchTab(tab) {
     }
 }
 
-// Password toggle functionality
 document.querySelectorAll('.password-toggle').forEach(toggle => {
     toggle.addEventListener('click', function() {
         const input = this.parentElement.querySelector('input');
@@ -28,7 +26,6 @@ document.querySelectorAll('.password-toggle').forEach(toggle => {
     });
 });
 
-// Password validation
 const passwordInput = document.querySelector('#register-form input[type="password"]');
 const requirements = {
     length: str => str.length >= 8,
