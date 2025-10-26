@@ -1,4 +1,4 @@
-console.log('Script.js завантажено успішно!');
+console.log('=== Script.js завантажено ===\n');
 
 // Завдання 1.2: Підрахунок елементів
 document.addEventListener('DOMContentLoaded', function() {
@@ -6,22 +6,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Кількість параграфів <p>
     const paragraphs = document.querySelectorAll('p');
-    console.log('Кількість параграфів <p>:', paragraphs.length);
+    console.log('✓ Кількість параграфів <p>:', paragraphs.length);
     
     // Кількість заголовків <h2>
     const h2Elements = document.querySelectorAll('h2');
-    console.log('Кількість заголовків <h2>:', h2Elements.length);
+    console.log('✓ Кількість заголовків <h2>:', h2Elements.length);
     
     // Background-color елементу <body>
     const body = document.querySelector('body');
     const bodyBgColor = window.getComputedStyle(body).backgroundColor;
-    console.log('Background-color елементу <body>:', bodyBgColor);
+    console.log('✓ Background-color елементу <body>:', bodyBgColor);
     
     // Font-size елементу <h1>
     const h1Element = document.querySelector('h1');
     if (h1Element) {
         const h1FontSize = window.getComputedStyle(h1Element).fontSize;
-        console.log('Font-size елементу <h1>:', h1FontSize);
+        console.log('✓ Font-size елементу <h1>:', h1FontSize);
     }
     
     console.log('=== Завдання 1.2 виконано ===\n');
@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('=== ЗАВДАННЯ 1.3: Обробники подій ===');
     
     const allElements = document.querySelectorAll('*');
+    let handlerCount = 0;
     
     allElements.forEach(function(element) {
         const originalBgColor = window.getComputedStyle(element).backgroundColor;
@@ -43,53 +44,76 @@ document.addEventListener('DOMContentLoaded', function() {
         element.addEventListener('mouseleave', function() {
             this.style.backgroundColor = originalBgColor;
         });
+        
+        handlerCount++;
     });
     
-    console.log('Обробники подій додано до', allElements.length, 'елементів');
+    console.log('✓ Обробники подій додано до', handlerCount, 'елементів');
+    console.log('✓ Події: mouseenter, mouseleave');
     console.log('=== Завдання 1.3 виконано ===\n');
 });
 
 // Завдання 2: setTimeout та динамічні зображення
+let countdownInterval;
+let timeLeft = 5;
+
+// Таймер зворотного відліку
+document.addEventListener('DOMContentLoaded', function() {
+    const countdownDiv = document.getElementById('countdown');
+    const timerSpan = document.getElementById('timer');
+    
+    if (countdownDiv && timerSpan) {
+        countdownInterval = setInterval(() => {
+            timeLeft--;
+            timerSpan.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                countdownDiv.innerHTML = '🎉 Зображення додаються...';
+            }
+        }, 1000);
+    }
+});
+
 setTimeout(function() {
     console.log('=== ЗАВДАННЯ 2: Динамічні зображення ===');
-    console.log('Запуск через 5 секунд після завантаження сторінки');
+    console.log('⏰ Запуск через 5 секунд після завантаження сторінки');
     
-    // Масив з URL зображень
+    // Масив з URL зображень (використовуємо Picsum Photos - завжди працюють)
     let imagesUrl = [
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=300&q=80",
-        "https://images.unsplash.com/photo-1571945153237-4929e783af4a?auto=format&fit=crop&w=300&q=80",
-        "https://images.unsplash.com/photo-1555966523-caa5b5ca1414?auto=format&fit=crop&w=300&q=80",
-        "https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=300&q=80"
+        "https://picsum.photos/400/300?random=1",
+        "https://picsum.photos/400/300?random=2",
+        "https://picsum.photos/400/300?random=3",
+        "https://picsum.photos/400/300?random=4"
     ];
     
-    console.log('Масив зображень:', imagesUrl);
+    console.log('📦 Масив зображень:', imagesUrl);
+    console.log('📦 Кількість зображень:', imagesUrl.length);
     
     // Знаходимо батьківський елемент (не body)
     const parentElement = document.querySelector('main');
     
     if (parentElement) {
+        console.log('✓ Батьківський елемент знайдено:', parentElement.tagName);
+        
         // Створюємо контейнер для зображень
-        const imagesContainer = document.createElement('section');
-        imagesContainer.style.cssText = `
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-            margin-top: 20px;
+        const imagesSection = document.createElement('section');
+        imagesSection.className = 'card';
+        imagesSection.innerHTML = `
+            <div class="card-header">
+                <div class="card-icon">🖼️</div>
+                <h2>Динамічно додані зображення</h2>
+            </div>
+            <div class="card-content">
+                <div id="dynamicImages" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;"></div>
+            </div>
         `;
         
-        const title = document.createElement('h2');
-        title.textContent = '📸 Динамічно додані зображення';
-        title.style.cssText = 'color: #667eea; margin-bottom: 15px;';
-        imagesContainer.appendChild(title);
+        parentElement.appendChild(imagesSection);
+        const imagesGrid = document.getElementById('dynamicImages');
         
-        const imagesGrid = document.createElement('div');
-        imagesGrid.style.cssText = `
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        `;
+        console.log('✓ Контейнер створено');
+        console.log('⏳ Завдання з зірочкою: кожне зображення через 1 секунду\n');
         
         // Завдання з зірочкою: кожне зображення з'являється через 1 секунду
         imagesUrl.forEach(function(url, index) {
@@ -97,40 +121,83 @@ setTimeout(function() {
                 // Використовуємо createDocumentFragment
                 const fragment = document.createDocumentFragment();
                 
-                const img = document.createElement('img');
-                img.src = url;
-                img.alt = `Зображення ${index + 1}`;
-                img.style.cssText = `
-                    width: 100%;
-                    height: 200px;
-                    object-fit: cover;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                    transition: transform 0.3s;
+                const imageWrapper = document.createElement('div');
+                imageWrapper.style.cssText = `
+                    position: relative;
+                    overflow: hidden;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                    transition: all 0.3s;
+                    animation: slideIn 0.5s ease;
                 `;
                 
-                img.addEventListener('mouseenter', function() {
-                    this.style.transform = 'scale(1.05)';
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = `Динамічне зображення ${index + 1}`;
+                img.style.cssText = `
+                    width: 100%;
+                    height: 250px;
+                    object-fit: cover;
+                    transition: transform 0.3s;
+                    display: block;
+                `;
+                
+                const overlay = document.createElement('div');
+                overlay.style.cssText = `
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+                    padding: 1rem;
+                    color: white;
+                    font-weight: 600;
+                `;
+                overlay.textContent = `Зображення #${index + 1}`;
+                
+                imageWrapper.addEventListener('mouseenter', function() {
+                    img.style.transform = 'scale(1.1)';
+                    imageWrapper.style.boxShadow = '0 8px 25px rgba(99, 102, 241, 0.4)';
                 });
                 
-                img.addEventListener('mouseleave', function() {
-                    this.style.transform = 'scale(1)';
+                imageWrapper.addEventListener('mouseleave', function() {
+                    img.style.transform = 'scale(1)';
+                    imageWrapper.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
                 });
                 
-                fragment.appendChild(img);
+                imageWrapper.appendChild(img);
+                imageWrapper.appendChild(overlay);
+                fragment.appendChild(imageWrapper);
                 imagesGrid.appendChild(fragment);
                 
-                console.log(`✅ Зображення ${index + 1} додано через ${index + 1} секунд`);
+                console.log(`✅ Зображення ${index + 1}/${imagesUrl.length} додано через ${index + 1} секунд`);
                 
-                if (index === 0) {
-                    imagesContainer.appendChild(imagesGrid);
-                    parentElement.appendChild(imagesContainer);
+                if (index === imagesUrl.length - 1) {
+                    console.log('🎉 Всі зображення успішно додані!');
+                    console.log('=== Завдання 2 виконано ===\n');
                 }
             }, (index + 1) * 1000);
         });
         
-        console.log('=== Завдання 2 виконано ===\n');
     } else {
-        console.error('Батьківський елемент не знайдено!');
+        console.error('❌ Батьківський елемент не знайдено!');
     }
 }, 5000);
+
+// Додаємо анімацію для динамічних зображень
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+console.log('✅ Script.js готовий до роботи!\n');
