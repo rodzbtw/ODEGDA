@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завдання 3: Регулярні вирази</title>
+    <link rel="stylesheet" href="../CSS/auth.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Завдання 3: Регулярні вирази</h1>
+            <nav>
+                <a href="index.html">← Назад</a>
+                <a href="set-task.html">Завдання 4 →</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <h2>Форма валідації</h2>
+                <p>Введіть дані для перевірки регулярними виразами</p>
+
+                <form id="validationForm">
+                    <div class="form-group">
+                        <label for="login">Login (тільки літери, цифри, _):</label>
+                        <input 
+                            type="text" 
+                            id="login" 
+                            name="login"
+                            placeholder="Наприклад: user_123"
+                            autocomplete="off"
+                        >
+                        <span class="help-text">Від 3 до 20 символів</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input 
+                            type="email" 
+                            id="email"
+                            placeholder="example@mail.com"
+                            autocomplete="off"
+                        >
+                        <span class="help-text">Правильний формат email</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Телефон:</label>
+                        <input 
+                            type="tel" 
+                            id="phone"
+                            placeholder="+380123456789"
+                            autocomplete="off"
+                        >
+                        <span class="help-text">Може починатися з +</span>
+                    </div>
+
+                    <button type="button" onclick="validateAll()">Перевірити всі поля</button>
+                </form>
+
+                <div class="result" id="result"></div>
+            </section>
+
+            <section class="info-section">
+                <h2>Як це працює?</h2>
+                <ul>
+                    <li><strong>match/search:</strong> Перевіряє правильність введених даних</li>
+                    <li><strong>replace:</strong> Автоматично очищає login від недозволених символів</li>
+                    <li><strong>Валідація:</strong> При втраті фокусу поле стає червоним якщо дані неправильні</li>
+                </ul>
+                <p class="console-tip">💡 Відкрийте консоль (F12) щоб побачити детальні логи валідації</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="../scripts/login.js"></script>
+</body>
+</html>

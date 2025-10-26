@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завдання 4: Робота з Set</title>
+    <link rel="stylesheet" href="../CSS/auth.css">
+    <style>
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .phrase-display {
+            background: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .phrase-display strong {
+            color: #667eea;
+        }
+
+        .common-words {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .word-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .no-common {
+            color: #999;
+            text-align: center;
+            padding: 15px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Завдання 4: Робота з Set</h1>
+            <nav>
+                <a href="index.html">Головна</a>
+                <a href="login.html">← Завдання 3</a>
+            </nav>
+        </header>
+
+        <main>
+            <section>
+                <h2>Знайти спільні слова між фразами</h2>
+                <p>Введіть дві фрази, і програма знайде спільні слова, використовуючи Set</p>
+
+                <div class="input-container">
+                    <label for="phrase1">Перша фраза:</label>
+                    <input 
+                        type="text" 
+                        id="phrase1" 
+                        placeholder='Наприклад: "Привіт, світ!"'
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="input-container">
+                    <label for="phrase2">Друга фраза:</label>
+                    <input 
+                        type="text" 
+                        id="phrase2" 
+                        placeholder='Наприклад: "Привіт, як справи?"'
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="buttons">
+                    <button class="btn btn-primary" onclick="findCommonWords()">
+                        Знайти спільні слова
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearAll()">
+                        Очистити
+                    </button>
+                </div>
+
+                <div class="results" id="results">
+                    <h3>Результат:</h3>
+                    <div class="phrase-display">
+                        <strong>Фраза 1:</strong> <span id="displayPhrase1"></span>
+                    </div>
+                    <div class="phrase-display">
+                        <strong>Фраза 2:</strong> <span id="displayPhrase2"></span>
+                    </div>
+                    <h3>Спільні слова:</h3>
+                    <div class="common-words" id="commonWords"></div>
+                </div>
+            </section>
+
+            <section class="info-section">
+                <h2>Як працює Set?</h2>
+                <ul>
+                    <li><strong>Set</strong> - зберігає тільки унікальні значення</li>
+                    <li><strong>has()</strong> - перевіряє наявність елемента</li>
+                    <li><strong>add()</strong> - додає новий елемент</li>
+                    <li><strong>size</strong> - кількість елементів</li>
+                </ul>
+                <p class="console-tip">💡 Відкрийте консоль (F12) щоб побачити детальну роботу з Set</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="../scripts/set-task.js"></script>
+</body>
+</html>
