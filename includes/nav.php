@@ -10,6 +10,7 @@ function renderNav($active_page = '') {
         'set-task' => ['url' => '/set-task', 'label' => 'Set/Map'],
         'api-task' => ['url' => '/api-task', 'label' => 'API'],
         'game' => ['url' => '/game', 'label' => 'Canvas Гра'],
+        'aboutme' => ['url' => '/aboutme', 'label' => 'Про мене'],
     ];
     ?>
     <nav class="navbar">

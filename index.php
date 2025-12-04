@@ -19,6 +19,7 @@ $routes = [
     'game' => 'game',
     'users' => 'users',
     'composer-demo' => 'composer-demo',
+    'aboutme' => 'aboutme',
 ];
 
 // Визначаємо поточну сторінку
@@ -38,6 +39,7 @@ $titles = [
     'game' => 'Завдання 6: Canvas - Космічна гра',
     'users' => 'Ієрархія класів користувачів',
     'composer-demo' => 'Composer Packages Demo',
+    'aboutme' => 'Про мене',
     '404' => '404 - Сторінку не знайдено',
 ];
 
