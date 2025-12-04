@@ -18,6 +18,7 @@ $routes = [
     'api-task' => 'api-task',
     'game' => 'game',
     'users' => 'users',
+    'composer-demo' => 'composer-demo',
 ];
 
 // Визначаємо поточну сторінку
@@ -36,6 +37,7 @@ $titles = [
     'api-task' => 'Завдання 5: Робота з API',
     'game' => 'Завдання 6: Canvas - Космічна гра',
     'users' => 'Ієрархія класів користувачів',
+    'composer-demo' => 'Composer Packages Demo',
     '404' => '404 - Сторінку не знайдено',
 ];
 
