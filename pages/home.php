@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo htmlspecialchars($page_title); ?></title>
+    <link rel="stylesheet" href="/CSS/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+
+    <?php require_once __DIR__ . '/../includes/nav.php'; renderNav(''); ?>
+
+    <header class="hero">
+        <div class="hero-container">
+            <h1 class="hero-title">
+                <span class="gradient-text">Завдання 1-2</span>
+                Робота з DOM та Події
+            </h1>
+            <p class="hero-subtitle">
+                Підрахунок елементів, обробка подій та динамічне створення контенту
+            </p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <div class="card-header">
+                <div class="card-icon">📊</div>
+                <h2>Завдання 1: Підрахунок елементів</h2>
+            </div>
+            <div class="card-content">
+                <p>JavaScript автоматично підраховує кількість елементів на сторінці:</p>
+                <ul class="feature-list">
+                    <li>Кількість параграфів <code>&lt;p&gt;</code></li>
+                    <li>Кількість заголовків <code>&lt;h2&gt;</code></li>
+                    <li>Background-color елементу <code>&lt;body&gt;</code></li>
+                    <li>Font-size елементу <code>&lt;h1&gt;</code></li>
+                </ul>
+                <div class="info-box">
+                    💡 Відкрийте консоль (F12) щоб побачити результати підрахунку
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <div class="card-icon">🎨</div>
+                <h2>Завдання 1: Інтерактивні події</h2>
+            </div>
+            <div class="card-content">
+                <p>Наведіть курсор на будь-який елемент сторінки:</p>
+                <div class="demo-boxes">
+                    <div class="demo-box">Елемент 1</div>
+                    <div class="demo-box">Елемент 2</div>
+                    <div class="demo-box">Елемент 3</div>
+                </div>
+                <p class="text-small">При наведенні фон змінюється на червоний, при відведенні - повертається</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <div class="card-icon">⏱️</div>
+                <h2>Завдання 2: Динамічні зображення</h2>
+            </div>
+            <div class="card-content">
+                <p>Через 5 секунд після завантаження сторінки з'являться зображення</p>
+                <p>Кожне зображення додається з інтервалом 1 секунда</p>
+                <div class="countdown" id="countdown">
+                    Зображення з'являться через <span id="timer">5</span> секунд...
+                </div>
+            </div>
+        </section>
+
+        <section class="tasks-grid">
+            <a href="/login" class="task-card task-card-1">
+                <div class="task-icon">🔐</div>
+                <h3>Завдання 3</h3>
+                <p>Регулярні вирази</p>
+                <span class="task-arrow">→</span>
+            </a>
+
+            <a href="/set-task" class="task-card task-card-2">
+                <div class="task-icon">📝</div>
+                <h3>Завдання 4</h3>
+                <p>Робота з Set/Map</p>
+                <span class="task-arrow">→</span>
+            </a>
+
+            <a href="/api-task" class="task-card task-card-3">
+                <div class="task-icon">🌐</div>
+                <h3>Завдання 5</h3>
+                <p>Робота з API</p>
+                <span class="task-arrow">→</span>
+            </a>
+
+            <a href="/game" class="task-card task-card-1">
+                <div class="task-icon">🎮</div>
+                <h3>Завдання 6</h3>
+                <p>Canvas - Гра</p>
+                <span class="task-arrow">→</span>
+            </a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2024 JavaScript Course Tasks</p>
+            <p class="footer-links">
+                <a href="https://github.com" target="_blank">GitHub</a>
+                <span>•</span>
+                <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Вгору ↑</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="/scripts/script.js"></script>
+</body>
+</html>
+
