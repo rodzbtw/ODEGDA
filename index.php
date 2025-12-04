@@ -21,6 +21,8 @@ $routes = [
     'composer-demo' => 'composer-demo',
     'aboutme' => 'aboutme',
     'database-demo' => 'database-demo',
+    'auth' => 'auth',
+    'register' => 'register',
 ];
 
 // Визначаємо поточну сторінку
@@ -42,10 +44,17 @@ $titles = [
     'composer-demo' => 'Composer Packages Demo',
     'aboutme' => 'Про мене',
     'database-demo' => 'Database Demo',
+    'auth' => 'Авторизація',
+    'register' => 'Реєстрація',
     '404' => '404 - Сторінку не знайдено',
 ];
 
+// Визначаємо title сторінки та екрануємо для захисту від XSS
+require_once __DIR__ . '/src/Classes/Security.php';
+use Classes\Security;
+
 $page_title = isset($titles[$page]) ? $titles[$page] : 'JavaScript Tasks';
+$page_title = Security::escape($page_title); // Захист від XSS через екранування символів
 
 // Визначаємо активний пункт меню
 $active_page = $page === 'home' ? '' : $page;
