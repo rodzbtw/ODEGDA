@@ -20,6 +20,7 @@ $routes = [
     'users' => 'users',
     'composer-demo' => 'composer-demo',
     'aboutme' => 'aboutme',
+    'database-demo' => 'database-demo',
 ];
 
 // Визначаємо поточну сторінку
@@ -40,6 +41,7 @@ $titles = [
     'users' => 'Ієрархія класів користувачів',
     'composer-demo' => 'Composer Packages Demo',
     'aboutme' => 'Про мене',
+    'database-demo' => 'Database Demo',
     '404' => '404 - Сторінку не знайдено',
 ];
 
