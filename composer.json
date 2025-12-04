@@ -18,7 +18,8 @@
     "autoload": {
         "psr-4": {
             "Odegda\\": "src/",
-            "Classes\\": "src/Classes/"
+            "Classes\\": "src/Classes/",
+            "Classes\\Models\\": "src/Classes/Models/"
         }
     },
     "minimum-stability": "stable",
