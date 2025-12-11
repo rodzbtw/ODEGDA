@@ -1,0 +1,23 @@
+services:
+  # Веб-сервис PHP
+  - type: web
+    name: kn24-php
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./
+    autoDeploy: true
+    healthCheckPath: /
+    
+    # Переменные окружения
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APACHE_DOCUMENT_ROOT
+        value: /var/www/html/public
+    
+    # Правила сборки
+    buildCommand: composer install --no-dev --optimize-autoloader
+    
+    # Команда запуска
+    startCommand: apache2-foreground
