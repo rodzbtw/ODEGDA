@@ -1,246 +1,135 @@
-# 📚 Документація API та Routes
+# API Documentation
 
-## 🌐 Огляд проекту
+## Опис всіх API ендпоінтів та маршрутів сайту
 
-Цей проект є навчальним веб-сайтом з JavaScript завданнями, що демонструє роботу з DOM, подіями, регулярними виразами, Set/Map, API та Canvas.
+### Основні маршрути (GET/POST)
 
----
+| Метод | Маршрут | Опис | Параметри |
+|-------|---------|------|-----------|
+| GET | `/` | Головна сторінка | - |
+| GET | `/login` | Сторінка входу | - |
+| POST | `/login` | Обробка форми входу | `username`, `password` |
+| GET | `/logout` | Вихід користувача | - |
+| GET | `/aboutme` | Сторінка "Про мене" | - |
 
-## 📄 Routes (Маршрути сторінок)
+### Маршрути завдань (JavaScript)
 
-| Маршрут | Файл | Опис | Функціональність |
-|---------|------|------|------------------|
-| `/HTML/index.html` | `index.html` | Головна сторінка | Підрахунок елементів DOM, обробка подій, динамічні зображення |
-| `/HTML/login.html` | `login.html` | Завдання 3: Валідація | Регулярні вирази для валідації login, email, phone |
-| `/HTML/set-task.html` | `set-task.html` | Завдання 4: Set/Map | Пошук спільних слів між фразами використовуючи Set |
-| `/HTML/api-task.html` | `api-task.html` | Завдання 5: API | Робота з зовнішніми API, async/await, fetch |
-| `/HTML/game.html` | `game.html` | Завдання 6: Canvas Гра | Космічна гра з Canvas API |
+| Метод | Маршрут | Опис |
+|-------|---------|------|
+| GET | `/set-task.html` | Завдання 4: Робота з Set/Map |
+| GET | `/api-task.html` | Завдання 5: Робота з API |
+| GET | `/game.html` | Завдання 6: Canvas гра |
 
----
+### API ендпоінти
 
-## 🔌 Зовнішні API Endpoints
+#### Зовнішні API
 
-### 1. Dog CEO API
+| API | Опис | Метод |
+|-----|------|-------|
+| `https://dog.ceo/api/breeds/image/random` | Отримання випадкового фото собаки | GET |
 
-#### Отримати випадкове фото собаки
-- **URL:** `https://dog.ceo/api/breeds/image/random`
-- **Метод:** `GET`
-- **Опис:** Повертає випадкове зображення собаки
-- **Авторизація:** Не потрібна
-- **Використання:** Використовується в `scripts/api-task.js`
-- **Приклад відповіді:**
-```json
-{
-  "status": "success",
-  "message": "https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg"
-}
+#### Внутрішні API (для майбутнього розширення)
+
+| Метод | Маршрут | Опис | Параметри |
+|-------|---------|------|-----------|
+| GET | `/api/users` | Отримати всіх користувачів | - |
+| GET | `/api/users/{id}` | Отримати користувача за ID | `id` |
+| POST | `/api/users` | Створити нового користувача | `username`, `email`, `password` |
+| GET | `/api/tasks` | Отримати всі завдання | - |
+| POST | `/api/tasks` | Створити нове завдання | `title`, `description`, `user_id` |
+| GET | `/api/tasks/{id}` | Отримати завдання за ID | `id` |
+| PUT | `/api/tasks/{id}` | Оновити завдання | `id`, `title`, `description` |
+| DELETE | `/api/tasks/{id}` | Видалити завдання | `id` |
+
+### Структура MVC
+
+#### Models (Моделі)
+- `User` - модель користувача
+- `MyModel` - модель завдань
+- `Database` - робота з базою даних
+
+#### Views (Представлення)
+- `home.latte` - головна сторінка
+- `login.latte` - форма входу
+- `error*.latte` - сторінки помилок
+
+#### Controllers (Контролери)
+- `HomePageController` - головна сторінка
+- `LoginController` - авторизація
+- `ErrorController` - обробка помилок
+- `AboutMeController` - сторінка "Про мене"
+
+### Безпека
+
+- **Параметризовані запити**: всі SQL запити через PDO prepared statements
+- **Захист від XSS**: фільтрація вхідних даних через `Security::escape()`
+- **Хешування паролів**: використання `password_hash()` з `PASSWORD_DEFAULT`
+- **CSRF захист**: генерація та перевірка CSRF токенів
+
+### База даних
+
+#### Таблиця Users
+```sql
+CREATE TABLE Users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
-**Документація:** [Dog CEO API Documentation](https://dog.ceo/dog-api/)
+#### Таблиця Tasks
+```sql
+CREATE TABLE Tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    user_id INTEGER,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+```
 
----
+### Приклади використання API
 
-### 2. Picsum Photos API
-
-#### Отримати випадкове зображення
-- **URL:** `https://picsum.photos/400/300?random={number}`
-- **Метод:** `GET`
-- **Параметри:**
-  - `400` - ширина зображення
-  - `300` - висота зображення
-  - `random={number}` - унікальний ідентифікатор для різних зображень
-- **Опис:** Повертає випадкове зображення з Lorem Picsum
-- **Авторизація:** Не потрібна
-- **Використання:** Використовується в `scripts/script.js` для динамічного додавання зображень
-- **Приклад використання:**
-  - `https://picsum.photos/400/300?random=1`
-  - `https://picsum.photos/400/300?random=2`
-  - `https://picsum.photos/400/300?random=3`
-  - `https://picsum.photos/400/300?random=4`
-
-**Документація:** [Picsum Photos API](https://picsum.photos/)
-
----
-
-## 🎯 JavaScript Функції (Внутрішні "Endpoints")
-
-### API Task (`scripts/api-task.js`)
-
-| Функція | Опис | Параметри | Повертає |
-|---------|------|-----------|----------|
-| `fetchRandomDog()` | Отримує випадкове фото собаки з API | - | `Promise<void>` |
-| `fetchMultipleDogs()` | Отримує 3 фото собак одночасно (Promise.all) | - | `Promise<void>` |
-| `displayDogImage(imageUrl, number)` | Відображає зображення собаки на сторінці | `imageUrl: string`, `number?: number` | `void` |
-| `downloadImage(url, name)` | Завантажує зображення на пристрій | `url: string`, `name: string` | `Promise<void>` |
-| `clearResults()` | Очищає результати на сторінці | - | `void` |
-| `copyToClipboard(text)` | Копіює текст в буфер обміну | `text: string` | `Promise<void>` |
-| `showLoading()` | Показує індикатор завантаження | - | `void` |
-| `hideLoading()` | Ховає індикатор завантаження | - | `void` |
-| `showError(message)` | Показує повідомлення про помилку | `message: string` | `void` |
-| `updateStats()` | Оновлює статистику запитів | - | `void` |
-
----
-
-### Login/Validation (`scripts/login.js`)
-
-| Функція | Опис | Параметри | Повертає |
-|---------|------|-----------|----------|
-| `validateLogin(login)` | Валідує login за допомогою regex | `login: string` | `boolean` |
-| `validateEmail(email)` | Валідує email за допомогою regex | `email: string` | `boolean` |
-| `validatePhone(phone)` | Валідує телефон за допомогою regex | `phone: string` | `boolean` |
-| `cleanLogin(login)` | Очищає login від недозволених символів | `login: string` | `string` |
-| `validateAll()` | Перевіряє всі поля форми | - | `void` |
-
-**Регулярні вирази:**
-- **Login:** `/^[a-zA-Z0-9_]{3,20}$/`
-- **Email:** `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`
-- **Phone:** `/^[\+]?[1-9][\d]{0,15}$/`
-
----
-
-### Set Task (`scripts/set-task.js`)
-
-| Функція | Опис | Параметри | Повертає |
-|---------|------|-----------|----------|
-| `findCommonWords()` | Знаходить спільні слова між двома фразами | - | `void` |
-| `getWordsSet(phrase)` | Створює Set зі слів фрази | `phrase: string` | `Set<string>` |
-| `normalizeText(text)` | Нормалізує текст (видаляє пунктуацію) | `text: string` | `string` |
-| `displayResults(phrase1, phrase2, commonWordsSet)` | Відображає результати аналізу | `phrase1: string`, `phrase2: string`, `commonWordsSet: Set<string>` | `void` |
-| `clearAll()` | Очищає поля вводу та результати | - | `void` |
-
----
-
-### Game (`scripts/game.js`)
-
-| Функція | Опис | Параметри | Повертає |
-|---------|------|-----------|----------|
-| `startGame()` | Починає гру | - | `void` |
-| `togglePause()` | Ставить гру на паузу/продовжує | - | `void` |
-| `restartGame()` | Перезапускає гру | - | `void` |
-| `gameOver()` | Завершує гру та показує екран програшу | - | `void` |
-| `gameLoop()` | Головний ігровий цикл (requestAnimationFrame) | - | `void` |
-| `drawPlayer()` | Малює ракету гравця на canvas | - | `void` |
-| `drawObstacle(obstacle)` | Малює перешкоду (астероїд) | `obstacle: Object` | `void` |
-| `drawStar(star)` | Малює зірку (бонус) | `star: Object` | `void` |
-| `checkCollisions()` | Перевіряє колізії між гравцем та об'єктами | - | `void` |
-| `updatePlayer()` | Оновлює позицію гравця | - | `void` |
-| `updateObstacles()` | Оновлює перешкоди | - | `void` |
-| `updateStars()` | Оновлює зірки | - | `void` |
-
-**LocalStorage:**
-- `spaceGameHighScore` - зберігає рекорд гри
-
----
-
-### Main Script (`scripts/script.js`)
-
-| Функція | Опис | Параметри | Повертає |
-|---------|------|-----------|----------|
-| DOM підрахунок | Автоматично підраховує елементи при завантаженні | - | `void` |
-| Обробники подій | Додає mouseenter/mouseleave до всіх елементів | - | `void` |
-| Динамічні зображення | Додає зображення через 5 секунд після завантаження | - | `void` |
-
----
-
-## 📊 Статистика API використання
-
-Проект відстежує статистику запитів до API:
-- **Всього запитів:** Загальна кількість виконаних запитів
-- **Успішних:** Кількість успішних запитів
-- **Помилок:** Кількість невдалих запитів
-
----
-
-## 🔗 Посилання на документацію
-
-### Swagger
-- **Swagger.io:** [https://swagger.io/](https://swagger.io/)
-- **Swagger Editor:** [https://editor.swagger.io/](https://editor.swagger.io/)
-- **Swagger UI:** [https://swagger.io/tools/swagger-ui/](https://swagger.io/tools/swagger-ui/)
-
-### Зовнішні API
-- **Dog CEO API:** [https://dog.ceo/dog-api/](https://dog.ceo/dog-api/)
-- **Picsum Photos:** [https://picsum.photos/](https://picsum.photos/)
-
-### JavaScript Документація
-- **MDN Web Docs:** [https://developer.mozilla.org/](https://developer.mozilla.org/)
-- **Fetch API:** [https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
-- **Async/Await:** [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
-- **Canvas API:** [https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
-
----
-
-## 📝 Приклади використання
-
-### Приклад 1: Отримання випадкового фото собаки
-
+#### Авторизація
 ```javascript
-async function fetchRandomDog() {
-    try {
-        const response = await fetch('https://dog.ceo/api/breeds/image/random');
-        const data = await response.json();
-        
-        if (data.status === 'success') {
-            console.log('Зображення:', data.message);
-        }
-    } catch (error) {
-        console.error('Помилка:', error);
+// POST /login
+fetch('/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: 'username=admin&password=password'
+})
+.then(response => response.text())
+.then(data => console.log(data));
+```
+
+#### Робота з зовнішнім API
+```javascript
+// Отримання фото собаки
+async function getDogImage() {
+    const response = await fetch('https://dog.ceo/api/breeds/image/random');
+    const data = await response.json();
+    
+    if (data.status === 'success') {
+        document.getElementById('dogImage').src = data.message;
     }
 }
 ```
 
-### Приклад 2: Множинні запити (Promise.all)
+### Коди відповідей
 
-```javascript
-async function fetchMultipleDogs() {
-    const promises = [
-        fetch('https://dog.ceo/api/breeds/image/random'),
-        fetch('https://dog.ceo/api/breeds/image/random'),
-        fetch('https://dog.ceo/api/breeds/image/random')
-    ];
-    
-    const responses = await Promise.all(promises);
-    const data = await Promise.all(responses.map(r => r.json()));
-    console.log('Всі зображення:', data);
-}
-```
-
-### Приклад 3: Валідація email
-
-```javascript
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const isValid = emailRegex.test('user@example.com'); // true
-```
+| Код | Опис |
+|-----|------|
+| 200 | OK |
+| 302 | Redirect (після входу/виходу) |
+| 404 | Not Found |
+| 403 | Forbidden |
+| 500 | Internal Server Error |
 
 ---
 
-## 🛠️ Технології
-
-- **HTML5** - структура сторінок
-- **CSS3** - стилізація
-- **JavaScript (ES6+)** - логіка та API запити
-- **Fetch API** - HTTP запити
-- **Canvas API** - малювання в грі
-- **LocalStorage** - збереження даних
-- **Regular Expressions** - валідація даних
-
----
-
-## 📅 Версія документації
-
-**Версія:** 1.0  
-**Дата створення:** 2024  
-**Останнє оновлення:** 2024
-
----
-
-## 👤 Автор
-
-JavaScript Course Tasks Project
-
----
-
-## 📄 Ліцензія
-
-Цей проект створено в навчальних цілях.
-
+**Версія API**: 1.0  
+**Останнє оновлення**: 2024
