@@ -11,10 +11,16 @@ namespace Classes;
  * @version 1.0
  * @since 2024
  */
+/**
+ * Класс Student
+ * 
+ * Демонстрирует наследование (extends AbstractUser) и полиморфизм
+ * (переопределение методов родительского класса)
+ */
 class Student extends AbstractUser
 {
     /**
-     * Группа студента
+     * Группа студента (инкапсуляция - свойство приватное)
      * 
      * @var string
      */
@@ -35,6 +41,7 @@ class Student extends AbstractUser
 
     /**
      * Реализация абстрактного метода getRole()
+     * (полиморфизм - переопределение абстрактного метода)
      * 
      * @return string Роль "Студент"
      */
@@ -66,13 +73,18 @@ class Student extends AbstractUser
     
     /**
      * Получить информацию о студенте
+     * (полиморфизм - переопределение метода родительского класса)
      * 
      * @return array Информация о студенте
      */
     public function getInfo(): array
     {
-        return array_merge(parent::getInfo(), [
-            'group' => $this->group
+        // Наследование - вызов метода родительского класса
+        $parentInfo = parent::getInfo();
+        // Полиморфизм - расширение функциональности
+        return array_merge($parentInfo, [
+            'group' => $this->group,
+            'type' => 'student'
         ]);
     }
 }

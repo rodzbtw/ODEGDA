@@ -11,10 +11,16 @@ namespace Classes;
  * @version 1.0
  * @since 2024
  */
+/**
+ * Класс Teacher
+ * 
+ * Демонстрирует наследование (extends AbstractUser) и полиморфизм
+ * (переопределение методов родительского класса)
+ */
 class Teacher extends AbstractUser
 {
     /**
-     * Предмет преподавателя
+     * Предмет преподавателя (инкапсуляция - свойство приватное)
      * 
      * @var string
      */
@@ -35,6 +41,7 @@ class Teacher extends AbstractUser
 
     /**
      * Реализация абстрактного метода getRole()
+     * (полиморфизм - переопределение абстрактного метода)
      * 
      * @return string Роль "Викладач"
      */
@@ -66,13 +73,18 @@ class Teacher extends AbstractUser
     
     /**
      * Получить информацию о преподавателе
+     * (полиморфизм - переопределение метода родительского класса)
      * 
      * @return array Информация о преподавателе
      */
     public function getInfo(): array
     {
-        return array_merge(parent::getInfo(), [
-            'subject' => $this->subject
+        // Наследование - вызов метода родительского класса
+        $parentInfo = parent::getInfo();
+        // Полиморфизм - расширение функциональности
+        return array_merge($parentInfo, [
+            'subject' => $this->subject,
+            'type' => 'teacher'
         ]);
     }
 }
